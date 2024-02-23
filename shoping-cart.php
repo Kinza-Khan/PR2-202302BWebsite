@@ -24,6 +24,21 @@ include('header.php');
 				echo "<script>alert('cart added successfully');location.assign('index.php');</script>";
 			}
 		}
+
+
+		// remove product
+		if(isset($_GET['remove'])){
+			$id = $_GET['remove'];
+			foreach($_SESSION['finalCart'] as $key => $value){
+					if($id == $value['p_id']){
+							unset($_SESSION['finalCart'][$key]);
+								//reset values of array
+								$_SESSION['finalCart']  = array_values($_SESSION['finalCart'] );
+								echo "<script>alert('product remove successfully');location.assign('shoping-cart.php');</script>";
+					}
+			}
+		}
+		
 		?>
 
 	<!-- breadcrumb -->
@@ -55,6 +70,7 @@ include('header.php');
 									<th class="column-3">Price</th>
 									<th class="column-4">Quantity</th>
 									<th class="column-5">Total</th>
+									<th>Action</th>
 								</tr>
 
 
@@ -84,6 +100,8 @@ include('header.php');
 										</div>
 									</td>
 									<td class="column-5"><?php echo $value['p_qty']*$value['p_price']?></td>
+								
+											<td><a href="?remove=<?php echo $value['p_id']?>" class="btn btn-danger">Remove</a></td>
 								</tr>
 								<?php
 									}
