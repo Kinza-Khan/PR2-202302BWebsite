@@ -103,6 +103,23 @@
 							<li>
 								<a href="contact.html">Contact</a>
 							</li>
+
+							<?php
+							if(isset($_SESSION['userEmail'])){
+								?>
+									<li>
+								<a href="weblogout.php">logout</a>
+							</li>
+								<?php
+							}
+							else{
+								?>
+									<li>
+								<a href="login.php">login</a>
+							</li>
+								<?php
+							}
+							?>
 						</ul>
 					</div>	
 
