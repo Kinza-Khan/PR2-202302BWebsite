@@ -38,6 +38,36 @@ include('header.php');
 					}
 			}
 		}
+
+		// checkout
+
+		if(isset($_GET['checkout'])){
+			$uId = $_SESSION['userId'];
+			$uName= $_SESSION['userName'];
+			$uEmail = $_SESSION['userEmail'];
+			foreach($_SESSION['finalCart'] as $key => $value){
+						$pId = $value['p_id'];
+						$pName = $value['p_name'];
+						$pPrice = $value['p_price']*$value['p_qty'];
+						$pQty = $value['p_qty'];
+
+						$query = $pdo->prepare("insert into pendingorders(u_id,u_name,u_email,p_id, p_name , p_price ,p_qty) values(:u_id , :u_name , :u_email , :p_id , :p_name , :p_price , :p_qty)");
+						$query->bindParam('u_id',$uId);
+						$query->bindParam('u_name',$uName);
+						$query->bindParam('u_email',$uEmail);
+						$query->bindParam('p_id',$pId);
+						$query->bindParam('p_name',$pName);
+						$query->bindParam('p_price',$pPrice);
+						$query->bindParam('p_qty',$pQty);
+						$query->execute();
+						echo "<script>alert('Order place successfully');location.assign('index.php');</script>";
+
+			}
+
+			// invoice table query
+
+			unset($_SESSION['finalCart']);
+		}
 		
 		?>
 
@@ -207,9 +237,9 @@ include('header.php');
 									<?php
 									if(isset($_SESSION['userEmail'])){
 										?>
-											<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+											<a href="?checkout" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
 						              	Proceed to Checkout
-						         </button>
+									</a>
 										<?php
 									}
 									else{

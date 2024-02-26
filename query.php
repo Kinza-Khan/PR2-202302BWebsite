@@ -18,6 +18,7 @@ if(isset($_POST['login'])){
             location.assign('adminPanel/index.php')</script>";
     }
     else if($user['role_id'] == 2){
+                        $_SESSION['userId'] = $user['id'];
                         $_SESSION['userEmail'] = $user['email'];
                         $_SESSION['userName'] = $user['name'];
                         echo "<script>alert('login successfully');
