@@ -24,6 +24,10 @@ if(isset($_POST['login'])){
                         echo "<script>alert('login successfully');
                         location.assign('index.php')</script>";
     }
+    else{
+        echo "<script>alert('invalid username or password');
+                        location.assign('index.php')</script>";
+    }
 }
 
 ?>
