@@ -43,11 +43,21 @@
                                     <td><?php echo $invoice['total_products']?></td>
                                     <td>$<?php echo $invoice['total_amount']?></td>
                                     <td><?php echo  $invoice['status']?></td>
-                                  
-                                    <td>  <form action="email.php" method="post"><button name="sendEmail" class="btn btn-sm btn-primary" >Pending</button>
+                                    <?php
+                                    if($invoice['status'] == 'pending'){
+                                    ?>
+                                    <td>  <form action="email.php" method="post"><button name="sendEmail" class="btn btn-sm btn-primary" ><?php echo $invoice['status']?></button>
                                     <input name="userEmail" type="hidden" value="<?php echo $invoice['u_email'] ?>">
                                     </form>
                                     </td>
+                                    <?php
+                                    }
+                                    else{
+                                        ?>
+                                            <td><?php echo $invoice['status']?></td>
+                                        <?php
+                                    }
+                                    ?>
                                 </tr>
                                 <?php
                                 }
