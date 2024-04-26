@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2024 at 06:28 AM
+-- Generation Time: Apr 26, 2024 at 08:32 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -41,7 +41,8 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `name`, `image`, `des`) VALUES
 (1, 'mobiles', 'mobile.jpg', 'abc'),
 (2, 'bags', 'bg1.webp', 'hello'),
-(3, 'watches', 'watch.webp', 'abc');
+(3, 'watches', 'watch.webp', 'abc'),
+(4, 'dffs', 'OIP (1).jpg', 'fdfsdfds');
 
 -- --------------------------------------------------------
 
@@ -76,6 +77,32 @@ SET NEW.y_pay = NEW.h_pay*2080;
 END
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `id` int(11) NOT NULL,
+  `u_id` int(11) NOT NULL,
+  `u_name` varchar(100) NOT NULL,
+  `u_email` varchar(100) NOT NULL,
+  `total_products` int(11) NOT NULL,
+  `total_amount` int(11) NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` varchar(200) NOT NULL DEFAULT 'pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`id`, `u_id`, `u_name`, `u_email`, `total_products`, `total_amount`, `date_time`, `status`) VALUES
+(1, 6, 'ali', 'ali@gmail.com', 5, 44000, '2024-02-28 05:08:28', 'pending'),
+(2, 2, 'aqsa khan', 'aqsa@gmail.com', 6, 206000, '2024-03-06 05:54:00', 'approve'),
+(3, 7, 'hasaan ', 'mhasaansuriya@gmail.com', 3, 107000, '2024-03-06 04:35:16', 'approve');
 
 -- --------------------------------------------------------
 
@@ -122,8 +149,25 @@ CREATE TABLE `pendingorders` (
   `p_name` varchar(200) NOT NULL,
   `p_qty` int(11) NOT NULL,
   `p_price` int(11) NOT NULL,
-  `dateTime` timestamp NOT NULL DEFAULT current_timestamp()
+  `dateTime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` varchar(100) NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pendingorders`
+--
+
+INSERT INTO `pendingorders` (`id`, `u_id`, `u_name`, `u_email`, `p_id`, `p_name`, `p_qty`, `p_price`, `dateTime`, `status`) VALUES
+(1, 6, 'ali', 'ali@gmail.com', 5, 'Royal Galaxy A78G', 2, 15000, '2024-02-26 04:40:58', 'pending'),
+(2, 6, 'ali', 'ali@gmail.com', 6, 'Royal Galaxy A9078y', 3, 8500, '2024-02-26 04:40:58', 'pending'),
+(3, 2, 'aqsa khan', 'aqsa@gmail.com', 2, 'abc', 9000, 9000, '2024-02-26 05:41:56', 'pending'),
+(4, 2, 'aqsa khan', 'aqsa@gmail.com', 2, 'abc', 18000, 9000, '2024-02-26 05:47:18', 'pending'),
+(12, 6, 'ali', 'ali@gmail.com', 6, 'Royal Galaxy A9078y', 2, 17000, '2024-02-28 05:08:28', 'pending'),
+(13, 6, 'ali', 'ali@gmail.com', 2, 'abc', 3, 27000, '2024-02-28 05:08:28', 'pending'),
+(14, 2, 'aqsa khan', 'aqsa@gmail.com', 2, 'abc', 4, 36000, '2024-02-28 05:32:50', 'pending'),
+(15, 2, 'aqsa khan', 'aqsa@gmail.com', 3, 'Oppo Reno', 2, 170000, '2024-02-28 05:32:51', 'pending'),
+(16, 7, 'hasaan ', 'mhasaansuriya@gmail.com', 6, 'Royal Galaxy A9078y', 2, 17000, '2024-03-01 04:59:27', 'pending'),
+(17, 7, 'hasaan ', 'mhasaansuriya@gmail.com', 4, 'Redmi Note 12', 1, 90000, '2024-03-01 04:59:27', 'pending');
 
 -- --------------------------------------------------------
 
@@ -206,7 +250,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role_id`) VALUES
 (2, 'aqsa khan', 'aqsa@gmail.com', '123Aqsa', 2),
 (5, 'admin', 'admin@gmail.com', '123', 1),
-(6, 'ali', 'ali@gmail.com', '123', 2);
+(6, 'ali', 'ali@gmail.com', '123', 2),
+(7, 'hasaan ', 'mhasaansuriya@gmail.com', '123', 2);
 
 --
 -- Indexes for dumped tables
@@ -222,6 +267,12 @@ ALTER TABLE `categories`
 -- Indexes for table `faculties`
 --
 ALTER TABLE `faculties`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -265,13 +316,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `faculties`
 --
 ALTER TABLE `faculties`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `invoice`
+--
+ALTER TABLE `invoice`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -283,7 +340,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `pendingorders`
 --
 ALTER TABLE `pendingorders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -301,7 +358,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
